@@ -11,6 +11,9 @@ class magic_bytes(Enum):
     DOC = b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"
     DOC_513to516 = b"\xEC\xA5\xC1\x00"
 
+    # From Wikipedia. Executable and Linkable Format
+    ELF = b"\x7F\x45\x4C\x46"
+
     # From CompuServe Incorporated. (1990, July 31). Graphics Interchange Format Version 89a Specification
     GIF_ver87a = b"\x47\x49\x46\x38\x37\x61"
     GIF_ver89a = b"\x47\x49\x46\x38\x39\x61"
@@ -59,6 +62,9 @@ def identify_file_type(header: bytes) -> Tuple[FileType] | None:
     #
     if header[0:8] == magic_bytes.DOC.value and header[512:516] == magic_bytes.DOC_513to516.value:
         return (FileType("Microsoft Word 97-2003", ".doc", [magic_bytes.DOC, magic_bytes.DOC_513to516]),)
+
+    if header[0:4] == magic_bytes.ELF.value:
+        return (FileType("Executable and Linkable Format", "no ext, .axf, .bin, .elf, .o, .out, .prx, .puff, .ko, .mod, .so", [magic_bytes.ELF]),)
 
     if header[0:6] == magic_bytes.GIF_ver87a.value:
         return (FileType("GIF ver87a", ".gif", [magic_bytes.GIF_ver87a]),)

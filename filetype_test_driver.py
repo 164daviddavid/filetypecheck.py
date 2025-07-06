@@ -10,6 +10,11 @@ TEXT_COLOURS = StrEnum("Text_Colour", [("GREEN", "\033[92m"), ("RED", "\033[91m"
 
 TEST_CASES = [
         sf_testcases.test_identify_doc,
+        sf_testcases.test_identify_elf_ext_bin,
+        sf_testcases.test_identify_elf_ext_elf,
+        sf_testcases.test_identify_elf_ext_o,
+        sf_testcases.test_identify_elf_ext_out,
+        sf_testcases.test_identify_elf_no_ext,
         sf_testcases.test_identify_gif87,
         sf_testcases.test_identify_gif89,
         sf_testcases.test_identify_mp3,

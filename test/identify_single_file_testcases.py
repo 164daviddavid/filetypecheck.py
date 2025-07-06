@@ -9,6 +9,46 @@ def test_identify_doc(args: argparse.Namespace):
         print(f"stderr:\n{result.stderr}")
     assert result.stdout == expected, f"Expected: {repr(expected)}\nActual: {repr(result.stdout)}"
 
+def test_identify_elf_ext_bin(args: argparse.Namespace):
+    expected = "test/resources/elf_example.bin: Executable and Linkable Format (no ext, .axf, .bin, .elf, .o, .out, .prx, .puff, .ko, .mod, .so)\n"
+    result: subprocess.CompletedProcess = subprocess.run(["python3", "filetypecheck.py", "test/resources/elf_example.bin"], capture_output=True, encoding="utf-8")
+
+    if args.show_stderr:
+        print(f"stderr:\n{result.stderr}")
+    assert result.stdout == expected, f"Expected: {repr(expected)}\nActual: {repr(result.stdout)}"
+
+def test_identify_elf_ext_elf(args: argparse.Namespace):
+    expected = "test/resources/elf_example.elf: Executable and Linkable Format (no ext, .axf, .bin, .elf, .o, .out, .prx, .puff, .ko, .mod, .so)\n"
+    result: subprocess.CompletedProcess = subprocess.run(["python3", "filetypecheck.py", "test/resources/elf_example.elf"], capture_output=True, encoding="utf-8")
+
+    if args.show_stderr:
+        print(f"stderr:\n{result.stderr}")
+    assert result.stdout == expected, f"Expected: {repr(expected)}\nActual: {repr(result.stdout)}"
+
+def test_identify_elf_ext_o(args: argparse.Namespace):
+    expected = "test/resources/elf_example.o: Executable and Linkable Format (no ext, .axf, .bin, .elf, .o, .out, .prx, .puff, .ko, .mod, .so)\n"
+    result: subprocess.CompletedProcess = subprocess.run(["python3", "filetypecheck.py", "test/resources/elf_example.o"], capture_output=True, encoding="utf-8")
+
+    if args.show_stderr:
+        print(f"stderr:\n{result.stderr}")
+    assert result.stdout == expected, f"Expected: {repr(expected)}\nActual: {repr(result.stdout)}"
+
+def test_identify_elf_ext_out(args: argparse.Namespace):
+    expected = "test/resources/elf_example.out: Executable and Linkable Format (no ext, .axf, .bin, .elf, .o, .out, .prx, .puff, .ko, .mod, .so)\n"
+    result: subprocess.CompletedProcess = subprocess.run(["python3", "filetypecheck.py", "test/resources/elf_example.out"], capture_output=True, encoding="utf-8")
+
+    if args.show_stderr:
+        print(f"stderr:\n{result.stderr}")
+    assert result.stdout == expected, f"Expected: {repr(expected)}\nActual: {repr(result.stdout)}"
+
+def test_identify_elf_no_ext(args: argparse.Namespace):
+    expected = "test/resources/elf_example: Executable and Linkable Format (no ext, .axf, .bin, .elf, .o, .out, .prx, .puff, .ko, .mod, .so)\n"
+    result: subprocess.CompletedProcess = subprocess.run(["python3", "filetypecheck.py", "test/resources/elf_example"], capture_output=True, encoding="utf-8")
+
+    if args.show_stderr:
+        print(f"stderr:\n{result.stderr}")
+    assert result.stdout == expected, f"Expected: {repr(expected)}\nActual: {repr(result.stdout)}"
+
 def test_identify_gif87(args: argparse.Namespace):
     expected = "test/resources/gif87_example.gif: GIF ver87a (.gif)\n"
     result: subprocess.CompletedProcess = subprocess.run(["python3", "filetypecheck.py", "test/resources/gif87_example.gif"], capture_output=True, encoding="utf-8")
