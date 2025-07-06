@@ -46,12 +46,12 @@ def main():
     args: argparse.Namespace = parser.parse_args()
 
     run_all = True
-    if len(args.testcase) != 0:
+    if args.testcase == None:
         run_all = False
 
     for testcase in TEST_CASES:
         try:
-            if not run_all and testcase.__name__ not in args.testcase:
+            if not run_all and ((args.testcase != None) and (testcase.__name__ not in args.testcase)):
                 continue
 
             testcase(args)
