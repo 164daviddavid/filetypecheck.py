@@ -46,19 +46,19 @@ def main():
     args: argparse.Namespace = parser.parse_args()
 
     run_all = True
-    if args.testcase == None:
+    if args.testcase != None:
         run_all = False
 
     for testcase in TEST_CASES:
         try:
-            if not run_all and ((args.testcase != None) and (testcase.__name__ not in args.testcase)):
+            if (not run_all) and (testcase.__name__ not in args.testcase):
                 continue
 
             testcase(args)
 
             if not args.quiet:
                 print(f"{testcase.__name__}: {TEXT_COLOURS.GREEN}OK{TEXT_COLOURS.RESET}")
-        
+
         except AssertionError as e:
             print(f"{testcase.__name__}: {TEXT_COLOURS.RED}FAILED{TEXT_COLOURS.RESET}")
             print(e)
