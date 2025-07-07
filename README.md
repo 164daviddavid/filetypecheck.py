@@ -21,6 +21,11 @@ python3 filetypecheck.py --non-matching <filepath1> ...
 | ------------- | ------ | ----- |
 | doc\_example.doc | Created in Word | |
 | docx\_example.docx | file-examples.com | |
+| elf\_example | Created by compiling C file with gcc | |
+| elf\_example.bin | Created by compiling C file with gcc | |
+| elf\_example.elf | Created by compiling C file with gcc | |
+| elf\_example.o | Created by compiling C file with gcc | |
+| elf\_example.out | Created by compiling C file with gcc | |
 | empty\_file | Created with touch | |
 | gif89\example.gif | file-examples.com | |
 | jpg\_example.jpg | file-examples.com | |
