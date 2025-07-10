@@ -49,7 +49,7 @@ class magic_bytes(Enum):
     WEBP_9to12 = b"\x57\x45\x42\x50"
 
 class FileType():
-    def __init__(self, name: str, ext: str, magic: List["magic_bytes"]):
+    def __init__(self, name: str, ext: List[str], magic: List["magic_bytes"]):
         self.name = name
         self.ext = ext
         self.magic = magic
@@ -61,43 +61,44 @@ def identify_file_type(header: bytes) -> Tuple[FileType] | None:
     # so no check is performed here
     #
     if header[0:8] == magic_bytes.DOC.value and header[512:516] == magic_bytes.DOC_513to516.value:
-        return (FileType("Microsoft Word 97-2003", ".doc", [magic_bytes.DOC, magic_bytes.DOC_513to516]),)
+        return (FileType("Microsoft Word 97-2003", [".doc"], [magic_bytes.DOC, magic_bytes.DOC_513to516]),)
 
     if header[0:4] == magic_bytes.ELF.value:
-        return (FileType("Executable and Linkable Format", "no ext, .axf, .bin, .elf, .o, .out, .prx, .puff, .ko, .mod, .so", [magic_bytes.ELF]),)
+        return (FileType("Executable and Linkable Format", ["no ext", ".axf", ".bin", ".elf", ".o", ".out", ".prx", ".puff", ".ko", ".mod", ".so"], [magic_bytes.ELF]),)
 
     if header[0:6] == magic_bytes.GIF_ver87a.value:
-        return (FileType("GIF ver87a", ".gif", [magic_bytes.GIF_ver87a]),)
+        return (FileType("GIF ver87a", [".gif"], [magic_bytes.GIF_ver87a]),)
 
     if header[0:6] == magic_bytes.GIF_ver89a.value:
-        return (FileType("GIF ver89a", ".gif", [magic_bytes.GIF_ver89a]),)
+        return (FileType("GIF ver89a", [".gif"], [magic_bytes.GIF_ver89a]),)
 
     if header[0:2] == magic_bytes.JPG_SOI.value and header[2:4] == magic_bytes.JPG_EXIF_3to4.value and header[6:10] == magic_bytes.JPG_EXIF_IDENTIFIER_7to10.value:
-        return (FileType("JPEG/EXIF", ".jpg", [magic_bytes.JPG_SOI, magic_bytes.JPG_EXIF_3to4, magic_bytes.JPG_EXIF_IDENTIFIER_7to10]),)
+        return (FileType("JPEG/EXIF", [".jpg"], [magic_bytes.JPG_SOI, magic_bytes.JPG_EXIF_3to4, magic_bytes.JPG_EXIF_IDENTIFIER_7to10]),)
 
     if header[0:2] == magic_bytes.JPG_SOI.value and header[2:4] == magic_bytes.JPG_JFIF_3to4.value and header[6:10] == magic_bytes.JPG_JFIF_IDENTIFIER_7to10.value:
-        return (FileType("JPEG/JFIF", ".jpg", [magic_bytes.JPG_SOI, magic_bytes.JPG_JFIF_3to4, magic_bytes.JPG_JFIF_IDENTIFIER_7to10]),)
+        return (FileType("JPEG/JFIF", [".jpg"], [magic_bytes.JPG_SOI, magic_bytes.JPG_JFIF_3to4, magic_bytes.JPG_JFIF_IDENTIFIER_7to10]),)
 
     if header[0:2] == magic_bytes.MP3_untagged.value:
-        return (FileType("MP3 without ID3v2 tag", ".mp3", [magic_bytes.MP3_untagged]),)
+        return (FileType("MP3 without ID3v2 tag", [".mp3"], [magic_bytes.MP3_untagged]),)
 
     if header[0:3] == magic_bytes.MP3_ID3v2.value:
-        return (FileType("MP3 with ID3v2 tag", ".mp3", [magic_bytes.MP3_ID3v2]),)
+        return (FileType("MP3 with ID3v2 tag", [".mp3"], [magic_bytes.MP3_ID3v2]),)
 
     if header[0:4] == magic_bytes.MS_OOXML.value:
-        return (FileType("Microsoft Open Office XML Format", ".docx, .pptx, .xlsx", [magic_bytes.MS_OOXML]),)
+        return (FileType("Microsoft Open Office XML Format", [".docx", ".pptx", ".xlsx"], [magic_bytes.MS_OOXML]),)
+
 
     if header[0:5] == magic_bytes.PDF.value:
-        return (FileType("Portable Document Format", ".pdf", [magic_bytes.PDF]),)
+        return (FileType("Portable Document Format", [".pdf"], [magic_bytes.PDF]),)
 
     if header[0:4] == magic_bytes.PNG.value:
-        return (FileType("Portable Network Graphics Format", ".png", [magic_bytes.PNG]),)
+        return (FileType("Portable Network Graphics Format", [".png"], [magic_bytes.PNG]),)
     
     if header[0:4] == magic_bytes.WAV_1to4.value and header[8:12] == magic_bytes.WAV_9to12.value:
-        return (FileType("Waveform Audio Format", ".wav", [magic_bytes.WAV_1to4, magic_bytes.WAV_9to12]),)
+        return (FileType("Waveform Audio Format", [".wav"], [magic_bytes.WAV_1to4, magic_bytes.WAV_9to12]),)
     
     if header[0:4] == magic_bytes.WEBP_1to4.value and header[8:12] == magic_bytes.WEBP_9to12.value:
-        return (FileType("WebP", ".webp", [magic_bytes.WEBP_1to4, magic_bytes.WEBP_9to12]),)
+        return (FileType("WebP", [".webp"], [magic_bytes.WEBP_1to4, magic_bytes.WEBP_9to12]),)
     return None
 
 def get_first_component(filepath: str) -> str:
@@ -117,15 +118,15 @@ def identify_msooxml(filepath: str) -> FileType | None:
     for filename in zf.namelist():
         match get_first_component(filename):
             case "word":
-                ftype = FileType("Microsoft Word 2007+", ".docx", [magic_bytes.GIF_ver89a])
+                ftype = FileType("Microsoft Word 2007+", [".docx"], [magic_bytes.GIF_ver89a])
                 break
 
             case "ppt":
-                ftype = FileType("Microsoft PowerPoint 2007+", ".pptx", [magic_bytes.GIF_ver89a])
+                ftype = FileType("Microsoft PowerPoint 2007+", [".pptx"], [magic_bytes.GIF_ver89a])
                 break
 
             case "xl":
-                ftype = FileType("Microsoft Excel 2007+", ".xlsx", [magic_bytes.GIF_ver89a])
+                ftype = FileType("Microsoft Excel 2007+", [".xlsx"], [magic_bytes.GIF_ver89a])
                 break
 
     zf.close()
@@ -135,26 +136,47 @@ def has_matching_extension(filepath: str, filetypes: Sequence["FileType"]) -> bo
     ext: str = os.path.splitext(filepath)[1]
 
     for filetype in filetypes:
-        if filetype.ext == ext:
+        if ext in filetype.ext:
             return True
     return False
 
+def generate_ext_output_str(extensions: Sequence[str]) -> str:
+    """Generates a string containing all extensions inside
+    <extensions> separated by a comma and space.
+
+    E.g. [".bin", ".elf"] |-> ".bin, .elf"
+    """
+    output: str = ""
+
+    i = 0
+    while i < len(extensions):
+        ext: str = extensions[i]
+
+        output += ext
+
+        if i != (len(extensions) - 1):
+            output += ", "
+        i += 1
+    return output
+
 def print_filetypes(filepath: str, filetypes: Sequence["FileType"]) -> None:
     print(f"{filepath}: ", end="")
-    
+
     i = 0
     while i < len(filetypes):
-        filetype = filetypes[i]
+        filetype: FileType = filetypes[i]
+
+        extensions: str = generate_ext_output_str(filetype.ext)
 
         if len(filetypes) == 1:
-            print(f"{filetype.name} ({filetype.ext})")
+            print(f"{filetype.name} ({extensions})")
             break
 
         if i + 1 == len(filetypes):
-            print(f" or {filetype.name} ({filetype.ext})")
+            print(f" or {filetype.name} ({extensions})")
         
         else:
-            print(f"{filetype.name} ({filetype.ext}),", end="")
+            print(f"{filetype.name} ({extensions}),", end="")
 
         i += 1
 
