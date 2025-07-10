@@ -26,6 +26,7 @@ python3 filetypecheck.py --non-matching <filepath1> ...
 | elf\_example.elf | Created by compiling C file with gcc | |
 | elf\_example.o | Created by compiling C file with gcc | |
 | elf\_example.out | Created by compiling C file with gcc | |
+| elf\_example.png | Created by compiling C file with gcc | Same as the other "elf\_example" files but with a file extension that is not from the ELF format |
 | empty\_file | Created with touch | |
 | gif89\example.gif | file-examples.com | |
 | jpg\_example.jpg | file-examples.com | |

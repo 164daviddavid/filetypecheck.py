@@ -1,10 +1,12 @@
 import argparse
-from enum import Enum
+from enum import Enum, StrEnum
 import os.path
 import sys
 from typing import List, Sequence, Tuple
 import zipfile
 
+
+EXT = StrEnum("EXT", [("NO_EXT", "no ext")])
 
 class magic_bytes(Enum):
     # From University of Houston-Clear Lake. FILE SIGNATURES TABLE
@@ -134,6 +136,9 @@ def identify_msooxml(filepath: str) -> FileType | None:
 
 def has_matching_extension(filepath: str, filetypes: Sequence["FileType"]) -> bool:
     ext: str = os.path.splitext(filepath)[1]
+
+    if ext == "":
+        ext = EXT.NO_EXT
 
     for filetype in filetypes:
         if ext in filetype.ext:

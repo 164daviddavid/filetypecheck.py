@@ -34,7 +34,9 @@ TEST_CASES = [
         o_testcases.test_identify_docx,
         o_testcases.test_identify_pptx,
         o_testcases.test_identify_pptx_with_excel_embed,
-        o_testcases.test_identify_xlsx]
+        o_testcases.test_identify_xlsx,
+        o_testcases.test_identify_format_has_no_ext,
+        o_testcases.test_identify_non_matching_format_has_multiple_ext]
 
 def main():
     parser = argparse.ArgumentParser()
