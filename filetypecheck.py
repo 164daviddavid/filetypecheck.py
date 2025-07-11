@@ -38,6 +38,8 @@ class magic_bytes(Enum):
     MP3_ID3v1 = b"\x54\x41\x47" # start of the last 128 bytes
     MP3_ID3v2 = b"\x49\x44\x33"
 
+    OPENSSH_PRIVATE = b"\x2D\x2D\x2D\x2D\x2D\x42\x45\x47\x49\x4E\x20\x4F\x50\x45\x4E\x53\x53\x48\x20\x50\x52\x49\x56\x41\x54\x45\x20\x4B\x45\x59\x2D\x2D\x2D\x2D\x2D"
+
     PDF = b"\x25\x50\x44\x46\x2D"
 
     PNG = b"\x89\x50\x4E\x47"
@@ -89,6 +91,8 @@ def identify_file_type(header: bytes) -> Tuple[FileType] | None:
     if header[0:4] == magic_bytes.MS_OOXML.value:
         return (FileType("Microsoft Open Office XML Format", [".docx", ".pptx", ".xlsx"], [magic_bytes.MS_OOXML]),)
 
+    if header[0:35] == magic_bytes.OPENSSH_PRIVATE.value:
+        return (FileType("OpenSSH Private Key", ["no ext"], [magic_bytes.OPENSSH_PRIVATE]),)
 
     if header[0:5] == magic_bytes.PDF.value:
         return (FileType("Portable Document Format", [".pdf"], [magic_bytes.PDF]),)

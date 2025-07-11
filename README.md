@@ -34,6 +34,7 @@ python3 filetypecheck.py --non-matching <filepath1> ...
 | mp3\_untagged\_example.mp3 | file-examples.com | Same as 'mp3\_example.mp3' but with the ID3 tags removed |
 | no\_ext\_png\_example | file-examples.com | Same file as 'png\_example.png' but with the extension removed |
 | non\_matching\_png\_example.jpg | file-examples.com | Same file as 'png\_example.png' but renamed to have .jpg extension |
+| openssh\_privatekey\_example | phpseclib.com - Sample RSA keys | |
 | pdf\_example.pdf | file-examples.com | |
 | png\_example.png | file-examples.com | |
 | ppt\_example.ppt | file-examples.com | |

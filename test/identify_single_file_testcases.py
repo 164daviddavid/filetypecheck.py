@@ -89,6 +89,14 @@ def test_identify_ms_ooxml(args: argparse.Namespace):
         print(f"stderr:\n{result.stderr}")
     assert result.stdout == expected, f"Expected: {repr(expected)}\nActual: {repr(result.stdout)}"
 
+def test_identify_openssh_private_key(args: argparse.Namespace):
+    expected = "test/resources/openssh_privatekey_example: OpenSSH Private Key (no ext)\n"
+    result: subprocess.CompletedProcess = subprocess.run(["python3", "filetypecheck.py", "test/resources/openssh_privatekey_example"], capture_output=True, encoding="utf-8")
+
+    if args.show_stderr:
+        print(f"stderr:\n{result.stderr}")
+    assert result.stdout == expected, f"Expected: {repr(expected)}\nActual: {repr(result.stdout)}"
+
 def test_identify_pdf(args: argparse.Namespace):
     expected = "test/resources/pdf_example.pdf: Portable Document Format (.pdf)\n"
     result: subprocess.CompletedProcess = subprocess.run(["python3", "filetypecheck.py", "test/resources/pdf_example.pdf"], capture_output=True, encoding="utf-8")

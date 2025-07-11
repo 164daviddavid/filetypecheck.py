@@ -20,6 +20,7 @@ TEST_CASES = [
         sf_testcases.test_identify_mp3,
         sf_testcases.test_identify_mp3_untagged,
         sf_testcases.test_identify_ms_ooxml,
+        sf_testcases.test_identify_openssh_private_key,
         sf_testcases.test_identify_pdf,
         sf_testcases.test_identify_png,
         sf_testcases.test_identify_wav,
