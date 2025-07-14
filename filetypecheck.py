@@ -58,6 +58,12 @@ class FileType():
         self.ext = ext
         self.magic = magic
 
+    def get_name() -> str:
+        return self.name
+
+    def get_ext() -> List[str]:
+        return self.ext
+
 
 def identify_file_type(header: bytes) -> Tuple[FileType] | None:
     #
@@ -145,7 +151,7 @@ def has_matching_extension(filepath: str, filetypes: Sequence["FileType"]) -> bo
         ext = EXT.NO_EXT
 
     for filetype in filetypes:
-        if ext in filetype.ext:
+        if ext in filetype.get_ext():
             return True
     return False
 
@@ -175,23 +181,23 @@ def print_filetypes(filepath: str, filetypes: Sequence["FileType"]) -> None:
     while i < len(filetypes):
         filetype: FileType = filetypes[i]
 
-        extensions: str = generate_ext_output_str(filetype.ext)
+        extensions: str = generate_ext_output_str(filetype.get_ext())
 
         if len(filetypes) == 1:
-            print(f"{filetype.name} ({extensions})")
+            print(f"{filetype.get_name()} ({extensions})")
             break
 
         if i + 1 == len(filetypes):
-            print(f" or {filetype.name} ({extensions})")
+            print(f" or {filetype.get_name()} ({extensions})")
         
         else:
-            print(f"{filetype.name} ({extensions}),", end="")
+            print(f"{filetype.get_name()} ({extensions}),", end="")
 
         i += 1
 
 def contains_filetype(name: str, ftypes: Sequence["FileType"]) -> bool:
     for ftype in ftypes:
-        if name == ftype.name:
+        if name == ftype.get_name():
             return True
     return False
 
